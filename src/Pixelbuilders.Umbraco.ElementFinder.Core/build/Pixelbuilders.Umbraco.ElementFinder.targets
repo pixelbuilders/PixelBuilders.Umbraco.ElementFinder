@@ -1,0 +1,20 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Path from the .targets file to the Core's App_Plugins folder -->
+    <ElementFinderSource>$(MSBuildThisFileDirectory)..\App_Plugins\Pixelbuilders.Umbraco.ElementFinder\**\*.*</ElementFinderSource>
+  </PropertyGroup>
+
+  <Target Name="CopyElementFinderAssets" BeforeTargets="Build">
+    <ItemGroup>
+      <ElementFinderFiles Include="$(ElementFinderSource)" />
+    </ItemGroup>
+
+    <Message Text="--- ELEMENT FINDER: Copying assets from Core to Site ---" Importance="high" />
+
+    <Copy
+      SourceFiles="@(ElementFinderFiles)"
+      DestinationFiles="@(ElementFinderFiles->'$(MSBuildProjectDirectory)\wwwroot\App_Plugins\Pixelbuilders.Umbraco.ElementFinder\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true"
+    />
+  </Target>
+</Project>

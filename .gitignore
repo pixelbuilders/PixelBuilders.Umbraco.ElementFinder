@@ -1,3 +1,34 @@
-.vs
-bin
-obj
+## --- Visual Studio / .NET --- ##
+# This catches bin/obj in both ElementFinder.Core and Example Site
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## --- Umbraco 17 Specific (Example Site) --- ##
+# Ignore runtime data and logs
+**/umbraco/Data/TEMP/
+**/umbraco/Logs/
+# Ignore local SQLite databases
+**/umbraco/Data/*.sqlite.db*
+**/umbraco/Data/*.sqlite-wal
+**/umbraco/Data/*.sqlite-shm
+# Ignore auto-generated models (if using ModelsBuilder in Live mode)
+**/umbraco/models/*.generated.cs
+
+## --- Lit / Vite Package (package folder) --- ##
+# Ignore dependencies and build artifacts
+**/node_modules/
+**/dist/
+# Ignore Vite/TS build logs
+*.tsbuildinfo
+.eslintcache
+
+## --- Misc / OS --- ##
+.DS_Store
+Thumbs.db
+.env
+.env.local

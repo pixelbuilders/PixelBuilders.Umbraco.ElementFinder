@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>Pixelbuilders.Umbraco.ElementFinder</PackageId>
+    <Product>Pixelbuilders.Umbraco.ElementFinder</Product>
+    <Title>Pixelbuilders.Umbraco.ElementFinder</Title>
+    <Description>An Umbraco extension that adds a tab to the documents in the Setting tab in the CMS to allow users to search for elements and page types being used within the CMS.</Description>
+    <PackageTags>umbraco;umbraco-marketplace;ElementFinder;Element;Content;Finder;BlockUses</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <Version>17.0.0</Version>
+    <Authors>Pixelbuilders</Authors>
+    <Copyright>2026 © Pixelbuilders</Copyright>
+    <PackageProjectUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</RepositoryUrl>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>NUGET.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Api.Management" Version="17.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 1. Bundle the Lit build into the NuGet package -->
+    <!-- Ensure your Vite outDir is: "ElementFinder.Core/App_Plugins/Pixelbuilders.ElementFinder" -->
+    <Content Update="App_Plugins\Pixelbuilders.Umbraco.ElementFinder\**\*.*">
+      <Pack>true</Pack>
+      <PackagePath>staticwebassets\App_Plugins\Pixelbuilders.Umbraco.ElementFinder\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
+    <!-- 2. Bundle the .targets file (created in next step) into the NuGet 'build' folder -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NUGET.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

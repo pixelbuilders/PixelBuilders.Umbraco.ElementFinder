@@ -18,7 +18,7 @@
     "SyncContributorsFromRepository": true
   },
   "Category": "Editor Tools",
-  "Description": "A umbraco dashboard to easily find elements / blocks being used within the CMS.",
+  "Description": "A umbraco extension to easily find elements / blocks being used within the CMS.",
   "LicenseTypes": [ "Free" ],
   "DocumentationUrl": "https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder",
   "IssueTrackerUrl": "https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/issues",
@@ -33,10 +33,6 @@
     {
       "ImageUrl": "https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-2.png",
       "Caption": "Screenshot 2"
-    },
-    {
-      "ImageUrl": "https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-3.png",
-      "Caption": "Screenshot 3"
     }
   ]
 }
