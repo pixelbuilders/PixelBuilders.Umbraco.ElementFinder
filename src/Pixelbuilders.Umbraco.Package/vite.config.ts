@@ -8,7 +8,7 @@ export default defineConfig({
             fileName: "element-finder",
         },
         // Point this directly into your Core Project
-        outDir: "../ElementFinder.Core/App_Plugins/Pixelbuilders.ElementFinder",
+        outDir: "../Pixelbuilders.Umbraco.ElementFinder.Core/App_Plugins/Pixelbuilders.Umbraco.ElementFinder",
         emptyOutDir: true,
         sourcemap: true,
         rollupOptions: {
