@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- This replaces the need for .targets and manual copying -->
+    <StaticWebAssetBasePath>App_Plugins/Pixelbuilders.Umbraco.ElementFinder</StaticWebAssetBasePath>
     <PackageId>Pixelbuilders.Umbraco.ElementFinder</PackageId>
     <Product>Pixelbuilders.Umbraco.ElementFinder</Product>
     <Title>Pixelbuilders.Umbraco.ElementFinder</Title>
@@ -27,22 +29,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- 1. Bundle the Lit build into the NuGet package -->
-    <!-- Ensure your Vite outDir is: "ElementFinder.Core/App_Plugins/Pixelbuilders.ElementFinder" -->
-    <Content Update="App_Plugins\Pixelbuilders.Umbraco.ElementFinder\**\*.*">
-      <Pack>true</Pack>
-      <PackagePath>staticwebassets\App_Plugins\Pixelbuilders.Umbraco.ElementFinder\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="App_Plugins\Pixelbuilders.Umbraco.ElementFinder\**\*.*"
+             Pack="true"
+             PackagePath="App_Plugins\Pixelbuilders.Umbraco.ElementFinder\" />
 
-    <!-- 2. Bundle the .targets file (created in next step) into the NuGet 'build' folder -->
+    <!-- IMPORTANT: You must also pack the .targets file itself -->
+    <None Include="build\Pixelbuilders.Umbraco.ElementFinder.targets"
+          Pack="true"
+          PackagePath="build\Pixelbuilders.Umbraco.ElementFinder.targets" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="NUGET.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Include="NUGET.md" Pack="true" PackagePath="\" />
     <None Include="logo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 

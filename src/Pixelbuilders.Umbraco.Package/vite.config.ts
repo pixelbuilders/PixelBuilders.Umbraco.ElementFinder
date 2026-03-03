@@ -7,8 +7,8 @@ export default defineConfig({
             formats: ["es"],
             fileName: "element-finder",
         },
-        // Point this directly into your Core Project
-        outDir: "../Pixelbuilders.Umbraco.ElementFinder.Core/App_Plugins/Pixelbuilders.Umbraco.ElementFinder",
+        // Point to wwwroot in your C# project
+        outDir: "../Pixelbuilders.Umbraco.ElementFinder.Core/wwwroot", 
         emptyOutDir: true,
         sourcemap: true,
         rollupOptions: {
