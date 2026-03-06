@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetUmbracoElementFinderApiV1UsageByAliasData, GetUmbracoElementFinderApiV1UsageByAliasErrors, GetUmbracoElementFinderApiV1UsageByAliasResponses } from './types.gen';
+import type { GetUmbracoElementFinderApiV1AllTypesData, GetUmbracoElementFinderApiV1AllTypesErrors, GetUmbracoElementFinderApiV1AllTypesResponses, GetUmbracoElementFinderApiV1UsageByAliasData, GetUmbracoElementFinderApiV1UsageByAliasErrors, GetUmbracoElementFinderApiV1UsageByAliasResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,8 +18,28 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
     meta?: Record<string, unknown>;
 };
 
-export const getUmbracoElementFinderApiV1UsageByAlias = <ThrowOnError extends boolean = false>(options: Options<GetUmbracoElementFinderApiV1UsageByAliasData, ThrowOnError>) => (options.client ?? client).get<GetUmbracoElementFinderApiV1UsageByAliasResponses, GetUmbracoElementFinderApiV1UsageByAliasErrors, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/umbraco/element-finder/api/v1/usage/{alias}',
-    ...options
-});
+export const getUmbracoElementFinderApiV1AllTypes = <ThrowOnError extends boolean = false>(options?: Options<GetUmbracoElementFinderApiV1AllTypesData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetUmbracoElementFinderApiV1AllTypesResponses, GetUmbracoElementFinderApiV1AllTypesErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/umbraco/element-finder/api/v1/all-types',
+        ...options
+    });
+};
+
+export const getUmbracoElementFinderApiV1UsageByAlias = <ThrowOnError extends boolean = false>(options: Options<GetUmbracoElementFinderApiV1UsageByAliasData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetUmbracoElementFinderApiV1UsageByAliasResponses, GetUmbracoElementFinderApiV1UsageByAliasErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/umbraco/element-finder/api/v1/usage/{alias}',
+        ...options
+    });
+};

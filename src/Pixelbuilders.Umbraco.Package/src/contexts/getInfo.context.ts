@@ -5,7 +5,7 @@ import {
   type IGetInfoDataSource,
 } from "../datasources/get-info.datasource";
 import { UmbContextToken } from "@umbraco-cms/backoffice/context-api";
-import type { Usage } from "../api";
+import type { Usage, Elements } from "../api";
 
 
 export class GetInfoContext extends UmbControllerBase {
@@ -21,6 +21,10 @@ export class GetInfoContext extends UmbControllerBase {
   async getInfoFromAlias(alias: string) : Promise<Usage | null>{
     return this.#dataSource.getElementInfo(alias);
   }
+
+    async getAllElementTypes(): Promise<Elements[]> {
+        return this.#dataSource.getAllDocumentTypes();
+    }
 }
 
 export default GetInfoContext;

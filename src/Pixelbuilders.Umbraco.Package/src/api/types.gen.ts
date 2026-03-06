@@ -10,9 +10,37 @@ export type Details = {
     id: string;
 };
 
+export type Elements = {
+    name: string;
+    alias: string;
+};
+
 export type Usage = {
     usages: Array<Details>;
 };
+
+export type GetUmbracoElementFinderApiV1AllTypesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/umbraco/element-finder/api/v1/all-types';
+};
+
+export type GetUmbracoElementFinderApiV1AllTypesErrors = {
+    /**
+     * The resource is protected and requires an authentication token
+     */
+    401: unknown;
+};
+
+export type GetUmbracoElementFinderApiV1AllTypesResponses = {
+    /**
+     * OK
+     */
+    200: Array<Elements>;
+};
+
+export type GetUmbracoElementFinderApiV1AllTypesResponse = GetUmbracoElementFinderApiV1AllTypesResponses[keyof GetUmbracoElementFinderApiV1AllTypesResponses];
 
 export type GetUmbracoElementFinderApiV1UsageByAliasData = {
     body?: never;

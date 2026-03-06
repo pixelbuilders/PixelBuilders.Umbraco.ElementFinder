@@ -2,6 +2,7 @@
 using ElementFinder.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pixelbuilders.Umbraco.ElementFinder.Core.Models;
 using System.Text.Json;
 using Umbraco.Cms.Api.Common.Attributes;
 using Umbraco.Cms.Api.Common.Filters;
@@ -38,6 +39,20 @@ namespace ElementFinder.Core
             _contentTypeService = contentTypeService;
             _publishedUrlProvider = publishedUrlProvider;
             _umbracoContextFactory = umbracoContextFactory;
+        }
+
+        [HttpGet("all-types")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(List<Elements>), 200)]
+        public List<Elements> GetAllDocumentTypes()
+        {
+            // Fetch all Document Types and Elements
+            return _contentTypeService.GetAll()
+                .Select(x => new Elements
+                {
+                    Name = x.Name,
+                    Alias = x.Alias,
+                }).OrderBy(x => x.Name).ToList();;
         }
 
         [HttpGet("usage/{alias}")]

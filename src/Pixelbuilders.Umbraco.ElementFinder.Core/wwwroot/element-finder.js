@@ -1,122 +1,132 @@
-var H = (e) => {
+var Q = (e) => {
   throw TypeError(e);
 };
-var V = (e, t, r) => t.has(e) || H("Cannot " + r);
-var F = (e, t, r) => (V(e, t, "read from private field"), r ? r.call(e) : t.get(e)), L = (e, t, r) => t.has(e) ? H("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, r), G = (e, t, r, s) => (V(e, t, "write to private field"), s ? s.call(e, r) : t.set(e, r), r);
+var Y = (e, t, r) => t.has(e) || Q("Cannot " + r);
+var R = (e, t, r) => (Y(e, t, "read from private field"), r ? r.call(e) : t.get(e)), Z = (e, t, r) => t.has(e) ? Q("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, r), ee = (e, t, r, s) => (Y(e, t, "write to private field"), s ? s.call(e, r) : t.set(e, r), r);
 import "@umbraco-cms/backoffice/extension-api";
-import { UMB_AUTH_CONTEXT as fe } from "@umbraco-cms/backoffice/auth";
-import { LitElement as he, html as _, css as pe, state as I, customElement as me } from "@umbraco-cms/backoffice/external/lit";
-import { UmbElementMixin as ye } from "@umbraco-cms/backoffice/element-api";
-import { UMB_WORKSPACE_CONTEXT as ge, UMB_WORKSPACE_MODAL as be } from "@umbraco-cms/backoffice/workspace";
-import { UMB_DOCUMENT_ENTITY_TYPE as J, UMB_EDIT_DOCUMENT_WORKSPACE_PATH_PATTERN as we } from "@umbraco-cms/backoffice/document";
-import { UmbControllerBase as _e } from "@umbraco-cms/backoffice/class-api";
+import { UMB_AUTH_CONTEXT as Ee } from "@umbraco-cms/backoffice/auth";
+import { LitElement as ne, html as f, css as ie, state as v, customElement as oe } from "@umbraco-cms/backoffice/external/lit";
+import { UmbElementMixin as le } from "@umbraco-cms/backoffice/element-api";
+import { UMB_WORKSPACE_CONTEXT as Te, UMB_WORKSPACE_MODAL as ce } from "@umbraco-cms/backoffice/workspace";
+import { UMB_DOCUMENT_ENTITY_TYPE as D, UMB_EDIT_DOCUMENT_WORKSPACE_PATH_PATTERN as ue } from "@umbraco-cms/backoffice/document";
+import { UmbControllerBase as Ae } from "@umbraco-cms/backoffice/class-api";
 import "@umbraco-cms/backoffice/controller-api";
-import { UmbContextToken as ve } from "@umbraco-cms/backoffice/context-api";
-import { UmbModalRouteRegistrationController as xe } from "@umbraco-cms/backoffice/router";
+import { UmbContextToken as Se } from "@umbraco-cms/backoffice/context-api";
+import { UmbModalRouteRegistrationController as de } from "@umbraco-cms/backoffice/router";
 import "@umbraco-cms/backoffice/extension-registry";
-const Ee = {
-  bodySerializer: (e) => JSON.stringify(e, (t, r) => typeof r == "bigint" ? r.toString() : r)
-}, Pe = ({
+const Ce = {
+  bodySerializer: (e) => JSON.stringify(
+    e,
+    (t, r) => typeof r == "bigint" ? r.toString() : r
+  )
+}, ke = ({
   onRequest: e,
   onSseError: t,
   onSseEvent: r,
   responseTransformer: s,
   responseValidator: a,
-  sseDefaultRetryDelay: l,
+  sseDefaultRetryDelay: c,
   sseMaxRetryAttempts: i,
   sseMaxRetryDelay: o,
-  sseSleepFn: c,
+  sseSleepFn: l,
   url: d,
   ...n
 }) => {
-  let p;
-  const T = c ?? ((u) => new Promise((y) => setTimeout(y, u)));
+  let h;
+  const k = l ?? ((u) => new Promise((g) => setTimeout(g, u)));
   return { stream: async function* () {
-    let u = l ?? 3e3, y = 0;
-    const v = n.signal ?? new AbortController().signal;
-    for (; !v.aborted; ) {
-      y++;
-      const S = n.headers instanceof Headers ? n.headers : new Headers(n.headers);
-      p !== void 0 && S.set("Last-Event-ID", p);
+    let u = c ?? 3e3, g = 0;
+    const x = n.signal ?? new AbortController().signal;
+    for (; !x.aborted; ) {
+      g++;
+      const O = n.headers instanceof Headers ? n.headers : new Headers(n.headers);
+      h !== void 0 && O.set("Last-Event-ID", h);
       try {
-        const x = {
+        const $ = {
           redirect: "follow",
           ...n,
           body: n.serializedBody,
-          headers: S,
-          signal: v
+          headers: O,
+          signal: x
         };
-        let w = new Request(d, x);
-        e && (w = await e(d, x));
-        const f = await (n.fetch ?? globalThis.fetch)(w);
-        if (!f.ok) throw new Error(`SSE failed: ${f.status} ${f.statusText}`);
-        if (!f.body) throw new Error("No body in SSE response");
-        const m = f.body.pipeThrough(new TextDecoderStream()).getReader();
-        let C = "";
-        const B = () => {
+        let b = new Request(d, $);
+        e && (b = await e(d, $));
+        const m = await (n.fetch ?? globalThis.fetch)(b);
+        if (!m.ok)
+          throw new Error(
+            `SSE failed: ${m.status} ${m.statusText}`
+          );
+        if (!m.body) throw new Error("No body in SSE response");
+        const _ = m.body.pipeThrough(new TextDecoderStream()).getReader();
+        let M = "";
+        const L = () => {
           try {
-            m.cancel();
+            _.cancel();
           } catch {
           }
         };
-        v.addEventListener("abort", B);
+        x.addEventListener("abort", L);
         try {
           for (; ; ) {
-            const { done: ce, value: le } = await m.read();
-            if (ce) break;
-            C += le, C = C.replace(/\r\n/g, `
-`).replace(/\r/g, `
-`);
-            const R = C.split(`
+            const { done: we, value: Pe } = await _.read();
+            if (we) break;
+            M += Pe;
+            const G = M.split(`
 
 `);
-            C = R.pop() ?? "";
-            for (const ue of R) {
-              const de = ue.split(`
+            M = G.pop() ?? "";
+            for (const xe of G) {
+              const $e = xe.split(`
 `), j = [];
-              let D;
-              for (const b of de)
-                if (b.startsWith("data:"))
-                  j.push(b.replace(/^data:\s*/, ""));
-                else if (b.startsWith("event:"))
-                  D = b.replace(/^event:\s*/, "");
-                else if (b.startsWith("id:"))
-                  p = b.replace(/^id:\s*/, "");
-                else if (b.startsWith("retry:")) {
-                  const M = Number.parseInt(b.replace(/^retry:\s*/, ""), 10);
-                  Number.isNaN(M) || (u = M);
+              let J;
+              for (const y of $e)
+                if (y.startsWith("data:"))
+                  j.push(y.replace(/^data:\s*/, ""));
+                else if (y.startsWith("event:"))
+                  J = y.replace(/^event:\s*/, "");
+                else if (y.startsWith("id:"))
+                  h = y.replace(/^id:\s*/, "");
+                else if (y.startsWith("retry:")) {
+                  const X = Number.parseInt(
+                    y.replace(/^retry:\s*/, ""),
+                    10
+                  );
+                  Number.isNaN(X) || (u = X);
                 }
-              let E, W = !1;
+              let E, K = !1;
               if (j.length) {
-                const b = j.join(`
+                const y = j.join(`
 `);
                 try {
-                  E = JSON.parse(b), W = !0;
+                  E = JSON.parse(y), K = !0;
                 } catch {
-                  E = b;
+                  E = y;
                 }
               }
-              W && (a && await a(E), s && (E = await s(E))), r == null || r({
+              K && (a && await a(E), s && (E = await s(E))), r == null || r({
                 data: E,
-                event: D,
-                id: p,
+                event: J,
+                id: h,
                 retry: u
               }), j.length && (yield E);
             }
           }
         } finally {
-          v.removeEventListener("abort", B), m.releaseLock();
+          x.removeEventListener("abort", L), _.releaseLock();
         }
         break;
-      } catch (x) {
-        if (t == null || t(x), i !== void 0 && y >= i)
+      } catch ($) {
+        if (t == null || t($), i !== void 0 && g >= i)
           break;
-        const w = Math.min(u * 2 ** (y - 1), o ?? 3e4);
-        await T(w);
+        const b = Math.min(
+          u * 2 ** (g - 1),
+          o ?? 3e4
+        );
+        await k(b);
       }
     }
   }() };
-}, Te = (e) => {
+}, Oe = (e) => {
   switch (e) {
     case "label":
       return ".";
@@ -127,7 +137,7 @@ const Ee = {
     default:
       return "&";
   }
-}, Se = (e) => {
+}, Ie = (e) => {
   switch (e) {
     case "form":
       return ",";
@@ -138,7 +148,7 @@ const Ee = {
     default:
       return ",";
   }
-}, Ce = (e) => {
+}, ze = (e) => {
   switch (e) {
     case "label":
       return ".";
@@ -149,7 +159,7 @@ const Ee = {
     default:
       return "&";
   }
-}, ee = ({
+}, he = ({
   allowReserved: e,
   explode: t,
   name: r,
@@ -157,7 +167,7 @@ const Ee = {
   value: a
 }) => {
   if (!t) {
-    const o = (e ? a : a.map((c) => encodeURIComponent(c))).join(Se(s));
+    const o = (e ? a : a.map((l) => encodeURIComponent(l))).join(Ie(s));
     switch (s) {
       case "label":
         return `.${o}`;
@@ -169,13 +179,13 @@ const Ee = {
         return `${r}=${o}`;
     }
   }
-  const l = Te(s), i = a.map((o) => s === "label" || s === "simple" ? e ? o : encodeURIComponent(o) : k({
+  const c = Oe(s), i = a.map((o) => s === "label" || s === "simple" ? e ? o : encodeURIComponent(o) : q({
     allowReserved: e,
     name: r,
     value: o
-  })).join(l);
-  return s === "label" || s === "matrix" ? l + i : i;
-}, k = ({
+  })).join(c);
+  return s === "label" || s === "matrix" ? c + i : i;
+}, q = ({
   allowReserved: e,
   name: t,
   value: r
@@ -187,22 +197,26 @@ const Ee = {
       "Deeply-nested arrays/objects aren’t supported. Provide your own `querySerializer()` to handle these."
     );
   return `${t}=${e ? r : encodeURIComponent(r)}`;
-}, te = ({
+}, fe = ({
   allowReserved: e,
   explode: t,
   name: r,
   style: s,
   value: a,
-  valueOnly: l
+  valueOnly: c
 }) => {
   if (a instanceof Date)
-    return l ? a.toISOString() : `${r}=${a.toISOString()}`;
+    return c ? a.toISOString() : `${r}=${a.toISOString()}`;
   if (s !== "deepObject" && !t) {
-    let c = [];
-    Object.entries(a).forEach(([n, p]) => {
-      c = [...c, n, e ? p : encodeURIComponent(p)];
+    let l = [];
+    Object.entries(a).forEach(([n, h]) => {
+      l = [
+        ...l,
+        n,
+        e ? h : encodeURIComponent(h)
+      ];
     });
-    const d = c.join(",");
+    const d = l.join(",");
     switch (s) {
       case "form":
         return `${r}=${d}`;
@@ -214,36 +228,39 @@ const Ee = {
         return d;
     }
   }
-  const i = Ce(s), o = Object.entries(a).map(
-    ([c, d]) => k({
+  const i = ze(s), o = Object.entries(a).map(
+    ([l, d]) => q({
       allowReserved: e,
-      name: s === "deepObject" ? `${r}[${c}]` : c,
+      name: s === "deepObject" ? `${r}[${l}]` : l,
       value: d
     })
   ).join(i);
   return s === "label" || s === "matrix" ? i + o : o;
-}, Oe = /\{[^{}]+\}/g, $e = ({ path: e, url: t }) => {
+}, Ue = /\{[^{}]+\}/g, je = ({ path: e, url: t }) => {
   let r = t;
-  const s = t.match(Oe);
+  const s = t.match(Ue);
   if (s)
     for (const a of s) {
-      let l = !1, i = a.substring(1, a.length - 1), o = "simple";
-      i.endsWith("*") && (l = !0, i = i.substring(0, i.length - 1)), i.startsWith(".") ? (i = i.substring(1), o = "label") : i.startsWith(";") && (i = i.substring(1), o = "matrix");
-      const c = e[i];
-      if (c == null)
+      let c = !1, i = a.substring(1, a.length - 1), o = "simple";
+      i.endsWith("*") && (c = !0, i = i.substring(0, i.length - 1)), i.startsWith(".") ? (i = i.substring(1), o = "label") : i.startsWith(";") && (i = i.substring(1), o = "matrix");
+      const l = e[i];
+      if (l == null)
         continue;
-      if (Array.isArray(c)) {
-        r = r.replace(a, ee({ explode: l, name: i, style: o, value: c }));
-        continue;
-      }
-      if (typeof c == "object") {
+      if (Array.isArray(l)) {
         r = r.replace(
           a,
-          te({
-            explode: l,
+          he({ explode: c, name: i, style: o, value: l })
+        );
+        continue;
+      }
+      if (typeof l == "object") {
+        r = r.replace(
+          a,
+          fe({
+            explode: c,
             name: i,
             style: o,
-            value: c,
+            value: l,
             valueOnly: !0
           })
         );
@@ -252,85 +269,84 @@ const Ee = {
       if (o === "matrix") {
         r = r.replace(
           a,
-          `;${k({
+          `;${q({
             name: i,
-            value: c
+            value: l
           })}`
         );
         continue;
       }
       const d = encodeURIComponent(
-        o === "label" ? `.${c}` : c
+        o === "label" ? `.${l}` : l
       );
       r = r.replace(a, d);
     }
   return r;
-}, Ae = ({
+}, Ne = ({
   baseUrl: e,
   path: t,
   query: r,
   querySerializer: s,
   url: a
 }) => {
-  const l = a.startsWith("/") ? a : `/${a}`;
-  let i = (e ?? "") + l;
-  t && (i = $e({ path: t, url: i }));
+  const c = a.startsWith("/") ? a : `/${a}`;
+  let i = (e ?? "") + c;
+  t && (i = je({ path: t, url: i }));
   let o = r ? s(r) : "";
   return o.startsWith("?") && (o = o.substring(1)), o && (i += `?${o}`), i;
 };
-function K(e) {
+function De(e) {
   const t = e.body !== void 0;
   if (t && e.bodySerializer)
     return "serializedBody" in e ? e.serializedBody !== void 0 && e.serializedBody !== "" ? e.serializedBody : null : e.body !== "" ? e.body : null;
   if (t)
     return e.body;
 }
-const ze = async (e, t) => {
+const qe = async (e, t) => {
   const r = typeof t == "function" ? await t(e) : t;
   if (r)
     return e.scheme === "bearer" ? `Bearer ${r}` : e.scheme === "basic" ? `Basic ${btoa(r)}` : r;
-}, re = ({
-  parameters: e = {},
-  ...t
-} = {}) => (s) => {
-  const a = [];
-  if (s && typeof s == "object")
-    for (const l in s) {
-      const i = s[l];
-      if (i == null)
-        continue;
-      const o = e[l] || t;
-      if (Array.isArray(i)) {
-        const c = ee({
-          allowReserved: o.allowReserved,
-          explode: !0,
-          name: l,
-          style: "form",
-          value: i,
-          ...o.array
-        });
-        c && a.push(c);
-      } else if (typeof i == "object") {
-        const c = te({
-          allowReserved: o.allowReserved,
-          explode: !0,
-          name: l,
-          style: "deepObject",
-          value: i,
-          ...o.object
-        });
-        c && a.push(c);
-      } else {
-        const c = k({
-          allowReserved: o.allowReserved,
-          name: l,
-          value: i
-        });
-        c && a.push(c);
-      }
+}, pe = ({
+  allowReserved: e,
+  array: t,
+  object: r
+} = {}) => (a) => {
+  const c = [];
+  if (a && typeof a == "object")
+    for (const i in a) {
+      const o = a[i];
+      if (o != null)
+        if (Array.isArray(o)) {
+          const l = he({
+            allowReserved: e,
+            explode: !0,
+            name: i,
+            style: "form",
+            value: o,
+            ...t
+          });
+          l && c.push(l);
+        } else if (typeof o == "object") {
+          const l = fe({
+            allowReserved: e,
+            explode: !0,
+            name: i,
+            style: "deepObject",
+            value: o,
+            ...r
+          });
+          l && c.push(l);
+        } else {
+          const l = q({
+            allowReserved: e,
+            name: i,
+            value: o
+          });
+          l && c.push(l);
+        }
     }
-  return a.join("&");
-}, je = (e) => {
+  return c.join("&");
+}, Be = (e) => {
   var r;
   if (!e)
     return "stream";
@@ -340,22 +356,24 @@ const ze = async (e, t) => {
       return "json";
     if (t === "multipart/form-data")
       return "formData";
-    if (["application/", "audio/", "image/", "video/"].some((s) => t.startsWith(s)))
+    if (["application/", "audio/", "image/", "video/"].some(
+      (s) => t.startsWith(s)
+    ))
       return "blob";
     if (t.startsWith("text/"))
       return "text";
   }
-}, Ie = (e, t) => {
+}, Me = (e, t) => {
   var r, s;
   return t ? !!(e.headers.has(t) || (r = e.query) != null && r[t] || (s = e.headers.get("Cookie")) != null && s.includes(`${t}=`)) : !1;
-}, ke = async ({
+}, Re = async ({
   security: e,
   ...t
 }) => {
   for (const r of e) {
-    if (Ie(t, r.name))
+    if (Me(t, r.name))
       continue;
-    const s = await ze(r, t.auth);
+    const s = await qe(r, t.auth);
     if (!s)
       continue;
     const a = r.name ?? "Authorization";
@@ -372,41 +390,41 @@ const ze = async (e, t) => {
         break;
     }
   }
-}, X = (e) => Ae({
+}, te = (e) => Ne({
   baseUrl: e.baseUrl,
   path: e.path,
   query: e.query,
-  querySerializer: typeof e.querySerializer == "function" ? e.querySerializer : re(e.querySerializer),
+  querySerializer: typeof e.querySerializer == "function" ? e.querySerializer : pe(e.querySerializer),
   url: e.url
-}), Q = (e, t) => {
+}), re = (e, t) => {
   var s;
   const r = { ...e, ...t };
-  return (s = r.baseUrl) != null && s.endsWith("/") && (r.baseUrl = r.baseUrl.substring(0, r.baseUrl.length - 1)), r.headers = se(e.headers, t.headers), r;
-}, Ue = (e) => {
+  return (s = r.baseUrl) != null && s.endsWith("/") && (r.baseUrl = r.baseUrl.substring(0, r.baseUrl.length - 1)), r.headers = ge(e.headers, t.headers), r;
+}, We = (e) => {
   const t = [];
   return e.forEach((r, s) => {
     t.push([s, r]);
   }), t;
-}, se = (...e) => {
+}, ge = (...e) => {
   const t = new Headers();
   for (const r of e) {
     if (!r)
       continue;
-    const s = r instanceof Headers ? Ue(r) : Object.entries(r);
-    for (const [a, l] of s)
-      if (l === null)
+    const s = r instanceof Headers ? We(r) : Object.entries(r);
+    for (const [a, c] of s)
+      if (c === null)
         t.delete(a);
-      else if (Array.isArray(l))
-        for (const i of l)
+      else if (Array.isArray(c))
+        for (const i of c)
           t.append(a, i);
-      else l !== void 0 && t.set(
+      else c !== void 0 && t.set(
         a,
-        typeof l == "object" ? JSON.stringify(l) : l
+        typeof c == "object" ? JSON.stringify(c) : c
       );
   }
   return t;
 };
-class U {
+class W {
   constructor() {
     this.fns = [];
   }
@@ -432,11 +450,11 @@ class U {
     return this.fns.push(t), this.fns.length - 1;
   }
 }
-const Ne = () => ({
-  error: new U(),
-  request: new U(),
-  response: new U()
-}), qe = re({
+const Fe = () => ({
+  error: new W(),
+  request: new W(),
+  response: new W()
+}), Ve = pe({
   allowReserved: !1,
   array: {
     explode: !0,
@@ -446,146 +464,127 @@ const Ne = () => ({
     explode: !0,
     style: "deepObject"
   }
-}), Be = {
+}), He = {
   "Content-Type": "application/json"
-}, ae = (e = {}) => ({
-  ...Ee,
-  headers: Be,
+}, me = (e = {}) => ({
+  ...Ce,
+  headers: He,
   parseAs: "auto",
-  querySerializer: qe,
+  querySerializer: Ve,
   ...e
-}), Re = (e = {}) => {
-  let t = Q(ae(), e);
-  const r = () => ({ ...t }), s = (d) => (t = Q(t, d), r()), a = Ne(), l = async (d) => {
+}), Le = (e = {}) => {
+  let t = re(me(), e);
+  const r = () => ({ ...t }), s = (d) => (t = re(t, d), r()), a = Fe(), c = async (d) => {
     const n = {
       ...t,
       ...d,
       fetch: d.fetch ?? t.fetch ?? globalThis.fetch,
-      headers: se(t.headers, d.headers),
+      headers: ge(t.headers, d.headers),
       serializedBody: void 0
     };
-    n.security && await ke({
+    n.security && await Re({
       ...n,
       security: n.security
     }), n.requestValidator && await n.requestValidator(n), n.body !== void 0 && n.bodySerializer && (n.serializedBody = n.bodySerializer(n.body)), (n.body === void 0 || n.serializedBody === "") && n.headers.delete("Content-Type");
-    const p = X(n);
-    return { opts: n, url: p };
+    const h = te(n);
+    return { opts: n, url: h };
   }, i = async (d) => {
-    const { opts: n, url: p } = await l(d), T = {
+    const { opts: n, url: h } = await c(d), k = {
       redirect: "follow",
       ...n,
-      body: K(n)
+      body: De(n)
     };
-    let g = new Request(p, T);
-    for (const h of a.request.fns)
-      h && (g = await h(g, n));
-    const z = n.fetch;
-    let u;
-    try {
-      u = await z(g);
-    } catch (h) {
-      let f = h;
-      for (const m of a.error.fns)
-        m && (f = await m(h, void 0, g, n));
-      if (f = f || {}, n.throwOnError)
-        throw f;
-      return n.responseStyle === "data" ? void 0 : {
-        error: f,
-        request: g,
-        response: void 0
-      };
-    }
-    for (const h of a.response.fns)
-      h && (u = await h(u, g, n));
-    const y = {
-      request: g,
+    let w = new Request(h, k);
+    for (const p of a.request.fns)
+      p && (w = await p(w, n));
+    const U = n.fetch;
+    let u = await U(w);
+    for (const p of a.response.fns)
+      p && (u = await p(u, w, n));
+    const g = {
+      request: w,
       response: u
     };
     if (u.ok) {
-      const h = (n.parseAs === "auto" ? je(u.headers.get("Content-Type")) : n.parseAs) ?? "json";
+      const p = (n.parseAs === "auto" ? Be(u.headers.get("Content-Type")) : n.parseAs) ?? "json";
       if (u.status === 204 || u.headers.get("Content-Length") === "0") {
-        let m;
-        switch (h) {
+        let _;
+        switch (p) {
           case "arrayBuffer":
           case "blob":
           case "text":
-            m = await u[h]();
+            _ = await u[p]();
             break;
           case "formData":
-            m = new FormData();
+            _ = new FormData();
             break;
           case "stream":
-            m = u.body;
+            _ = u.body;
             break;
           case "json":
           default:
-            m = {};
+            _ = {};
             break;
         }
-        return n.responseStyle === "data" ? m : {
-          data: m,
-          ...y
+        return n.responseStyle === "data" ? _ : {
+          data: _,
+          ...g
         };
       }
-      let f;
-      switch (h) {
+      let m;
+      switch (p) {
         case "arrayBuffer":
         case "blob":
         case "formData":
+        case "json":
         case "text":
-          f = await u[h]();
+          m = await u[p]();
           break;
-        case "json": {
-          const m = await u.text();
-          f = m ? JSON.parse(m) : {};
-          break;
-        }
         case "stream":
           return n.responseStyle === "data" ? u.body : {
             data: u.body,
-            ...y
+            ...g
           };
       }
-      return h === "json" && (n.responseValidator && await n.responseValidator(f), n.responseTransformer && (f = await n.responseTransformer(f))), n.responseStyle === "data" ? f : {
-        data: f,
-        ...y
+      return p === "json" && (n.responseValidator && await n.responseValidator(m), n.responseTransformer && (m = await n.responseTransformer(m))), n.responseStyle === "data" ? m : {
+        data: m,
+        ...g
       };
     }
-    const v = await u.text();
-    let S;
+    const x = await u.text();
+    let O;
     try {
-      S = JSON.parse(v);
+      O = JSON.parse(x);
     } catch {
     }
-    const x = S ?? v;
-    let w = x;
-    for (const h of a.error.fns)
-      h && (w = await h(x, u, g, n));
-    if (w = w || {}, n.throwOnError)
-      throw w;
+    const $ = O ?? x;
+    let b = $;
+    for (const p of a.error.fns)
+      p && (b = await p($, u, w, n));
+    if (b = b || {}, n.throwOnError)
+      throw b;
     return n.responseStyle === "data" ? void 0 : {
-      error: w,
-      ...y
+      error: b,
+      ...g
     };
-  }, o = (d) => (n) => i({ ...n, method: d }), c = (d) => async (n) => {
-    const { opts: p, url: T } = await l(n);
-    return Pe({
-      ...p,
-      body: p.body,
-      headers: p.headers,
+  }, o = (d) => (n) => i({ ...n, method: d }), l = (d) => async (n) => {
+    const { opts: h, url: k } = await c(n);
+    return ke({
+      ...h,
+      body: h.body,
+      headers: h.headers,
       method: d,
-      onRequest: async (g, z) => {
-        let u = new Request(g, z);
-        for (const y of a.request.fns)
-          y && (u = await y(u, p));
+      onRequest: async (w, U) => {
+        let u = new Request(w, U);
+        for (const g of a.request.fns)
+          g && (u = await g(u, h));
         return u;
       },
-      serializedBody: K(p),
-      url: T
+      url: k
     });
   };
   return {
-    buildUrl: X,
+    buildUrl: te,
     connect: o("CONNECT"),
     delete: o("DELETE"),
     get: o("GET"),
@@ -599,27 +598,41 @@ const Ne = () => ({
     request: i,
     setConfig: s,
     sse: {
-      connect: c("CONNECT"),
-      delete: c("DELETE"),
-      get: c("GET"),
-      head: c("HEAD"),
-      options: c("OPTIONS"),
-      patch: c("PATCH"),
-      post: c("POST"),
-      put: c("PUT"),
-      trace: c("TRACE")
+      connect: l("CONNECT"),
+      delete: l("DELETE"),
+      get: l("GET"),
+      head: l("HEAD"),
+      options: l("OPTIONS"),
+      patch: l("PATCH"),
+      post: l("POST"),
+      put: l("PUT"),
+      trace: l("TRACE")
     },
     trace: o("TRACE")
   };
-}, ne = Re(ae()), De = (e) => (e.client ?? ne).get({
-  security: [{ scheme: "bearer", type: "http" }],
+}, H = Le(me()), Ge = (e) => ((e == null ? void 0 : e.client) ?? H).get({
+  security: [
+    {
+      scheme: "bearer",
+      type: "http"
+    }
+  ],
+  url: "/umbraco/element-finder/api/v1/all-types",
+  ...e
+}), Je = (e) => (e.client ?? H).get({
+  security: [
+    {
+      scheme: "bearer",
+      type: "http"
+    }
+  ],
   url: "/umbraco/element-finder/api/v1/usage/{alias}",
   ...e
 });
-class We {
+class Ke {
   async getElementInfo(t) {
     try {
-      return (await De({
+      return (await Je({
         path: {
           alias: t
         }
@@ -628,44 +641,54 @@ class We {
       return null;
     }
   }
+  async getAllDocumentTypes() {
+    try {
+      return (await Ge()).data ?? [];
+    } catch (t) {
+      return console.error("Failed to fetch document types:", t), [];
+    }
+  }
 }
-var $;
-class Y extends _e {
+var C;
+class se extends Ae {
   constructor(r) {
     super(r);
-    L(this, $);
-    G(this, $, new We()), this.provideContext(q, this);
+    Z(this, C);
+    ee(this, C, new Ke()), this.provideContext(B, this);
   }
   async getInfoFromAlias(r) {
-    return F(this, $).getElementInfo(r);
+    return R(this, C).getElementInfo(r);
+  }
+  async getAllElementTypes() {
+    return R(this, C).getAllDocumentTypes();
   }
 }
-$ = new WeakMap();
-const q = new ve("GetInfoContext"), Me = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+C = new WeakMap();
+const B = new Se("GetInfoContext"), Xe = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  GET_INFO_CONTEXT_TOKEN: q,
-  GetInfoContext: Y,
-  default: Y
+  GET_INFO_CONTEXT_TOKEN: B,
+  GetInfoContext: se,
+  default: se
 }, Symbol.toStringTag, { value: "Module" }));
-var He = Object.defineProperty, Ve = Object.getOwnPropertyDescriptor, ie = (e) => {
+var Qe = Object.defineProperty, Ye = Object.getOwnPropertyDescriptor, ye = (e) => {
   throw TypeError(e);
-}, A = (e, t, r, s) => {
-  for (var a = s > 1 ? void 0 : s ? Ve(t, r) : t, l = e.length - 1, i; l >= 0; l--)
-    (i = e[l]) && (a = (s ? i(t, r, a) : i(a)) || a);
-  return s && a && He(t, r, a), a;
-}, oe = (e, t, r) => t.has(e) || ie("Cannot " + r), Z = (e, t, r) => (oe(e, t, "read from private field"), r ? r.call(e) : t.get(e)), Fe = (e, t, r) => t.has(e) ? ie("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, r), Le = (e, t, r, s) => (oe(e, t, "write to private field"), t.set(e, r), r), O;
-const N = 10;
-let P = class extends ye(he) {
+}, z = (e, t, r, s) => {
+  for (var a = s > 1 ? void 0 : s ? Ye(t, r) : t, c = e.length - 1, i; c >= 0; c--)
+    (i = e[c]) && (a = (s ? i(t, r, a) : i(a)) || a);
+  return s && a && Qe(t, r, a), a;
+}, be = (e, t, r) => t.has(e) || ye("Cannot " + r), ae = (e, t, r) => (be(e, t, "read from private field"), r ? r.call(e) : t.get(e)), Ze = (e, t, r) => t.has(e) ? ye("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, r), et = (e, t, r, s) => (be(e, t, "write to private field"), t.set(e, r), r), I;
+const F = 10;
+let A = class extends le(ne) {
   constructor() {
-    super(), this._nodes = [], this._loading = !1, this._error = null, this._currentPage = 1, Fe(this, O), this.consumeContext(q, (e) => {
-      e && Le(this, O, e);
-    }), this.consumeContext(ge, (e) => {
+    super(), this._nodes = [], this._loading = !1, this._error = null, this._currentPage = 1, Ze(this, I), this.consumeContext(B, (e) => {
+      e && et(this, I, e);
+    }), this.consumeContext(Te, (e) => {
       e && this.observe(e.data, async (t) => {
         var r;
-        if (!(!(t != null && t.alias) || !Z(this, O))) {
+        if (!(!(t != null && t.alias) || !ae(this, I))) {
           this._loading = !0, this._error = null;
           try {
-            const s = await Z(this, O).getInfoFromAlias(t.alias);
+            const s = await ae(this, I).getInfoFromAlias(t.alias);
             (r = s == null ? void 0 : s.usages) != null && r.length ? (this._nodes = s.usages, this._currentPage = 1) : this._nodes = [];
           } catch (s) {
             console.error(s), this._error = "Error fetching usage", this._nodes = [];
@@ -674,20 +697,20 @@ let P = class extends ye(he) {
           }
         }
       });
-    }), this._modalRegistration = new xe(
+    }), this._modalRegistration = new de(
       this,
-      be
-    ).addAdditionalPath(J).onSetup(() => ({
-      data: { entityType: J },
+      ce
+    ).addAdditionalPath(D).onSetup(() => ({
+      data: { entityType: D },
       modal: { size: "large" }
     }));
   }
   get pagedNodes() {
-    const e = (this._currentPage - 1) * N;
-    return this._nodes.slice(e, e + N);
+    const e = (this._currentPage - 1) * F;
+    return this._nodes.slice(e, e + F);
   }
   totalPages() {
-    return Math.ceil(this._nodes.length / N);
+    return Math.ceil(this._nodes.length / F);
   }
   nextPage() {
     this._currentPage < this.totalPages() && this._currentPage++;
@@ -696,23 +719,23 @@ let P = class extends ye(he) {
     this._currentPage > 1 && this._currentPage--;
   }
   _openEditModal(e) {
-    const t = we.generateLocal({
+    const t = ue.generateLocal({
       unique: e
     });
     this._modalRegistration.open({}, t);
   }
   render() {
-    return this._loading ? _`<uui-loader></uui-loader>` : _`
+    return this._loading ? f`<uui-loader></uui-loader>` : f`
       <uui-box headline="Content Usage">
         <div slot="header">
           Found ${this._nodes.length} instance(s) of this type.
         </div>
 
-        ${this._error ? _`<uui-tag look="danger">${this._error}</uui-tag>` : ""}
-        ${this._nodes.length > 0 ? _`
+        ${this._error ? f`<uui-tag look="danger">${this._error}</uui-tag>` : ""}
+        ${this._nodes.length > 0 ? f`
               <div class="usage-list">
                 ${this.pagedNodes.map(
-      (e, t) => _`
+      (e, t) => f`
                     <div class="usage-item">
                       <span class="page-name">${e.pageName}</span>
                       <div class="actions">
@@ -728,13 +751,13 @@ let P = class extends ye(he) {
                         ></uui-button>
                       </div>
                     </div>
-                    ${t < this.pagedNodes.length - 1 ? _`<hr class="divider" />` : null}
+                    ${t < this.pagedNodes.length - 1 ? f`<hr class="divider" />` : null}
                   `
     )}
               </div>
 
               <!-- Pagination -->
-              ${this.totalPages() > 1 ? _`
+              ${this.totalPages() > 1 ? f`
                     <div class="pagination">
                       <uui-button
                         label="Previous"
@@ -751,7 +774,7 @@ let P = class extends ye(he) {
                       ></uui-button>
                     </div>
                   ` : null}
-            ` : _`
+            ` : f`
               <uui-state-message>
                 No content nodes are currently using this Document Type.
               </uui-state-message>
@@ -760,8 +783,8 @@ let P = class extends ye(he) {
     `;
   }
 };
-O = /* @__PURE__ */ new WeakMap();
-P.styles = pe`
+I = /* @__PURE__ */ new WeakMap();
+A.styles = ie`
     :host {
       display: block;
       padding: var(--uui-size-layout-1);
@@ -802,22 +825,227 @@ P.styles = pe`
       margin-top: var(--uui-size-2);
     }
   `;
-A([
-  I()
+z([
+  v()
+], A.prototype, "_nodes", 2);
+z([
+  v()
+], A.prototype, "_loading", 2);
+z([
+  v()
+], A.prototype, "_error", 2);
+z([
+  v()
+], A.prototype, "_currentPage", 2);
+A = z([
+  oe("element-finder")
+], A);
+var tt = Object.defineProperty, rt = Object.getOwnPropertyDescriptor, _e = (e) => {
+  throw TypeError(e);
+}, S = (e, t, r, s) => {
+  for (var a = s > 1 ? void 0 : s ? rt(t, r) : t, c = e.length - 1, i; c >= 0; c--)
+    (i = e[c]) && (a = (s ? i(t, r, a) : i(a)) || a);
+  return s && a && tt(t, r, a), a;
+}, ve = (e, t, r) => t.has(e) || _e("Cannot " + r), N = (e, t, r) => (ve(e, t, "read from private field"), t.get(e)), st = (e, t, r) => t.has(e) ? _e("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, r), at = (e, t, r, s) => (ve(e, t, "write to private field"), t.set(e, r), r), T;
+const V = 10;
+let P = class extends le(
+  ne
+) {
+  constructor() {
+    super(), this._nodes = [], this._loading = !1, this._error = null, this._currentPage = 1, this._selectedAlias = "", this._docTypes = [], st(this, T), this.consumeContext(B, (e) => {
+      at(this, T, e), this._loadDocTypes();
+    }), this._modalRegistration = new de(
+      this,
+      ce
+    ).addAdditionalPath(D).onSetup(() => ({
+      data: { entityType: D },
+      modal: { size: "large" }
+    }));
+  }
+  async _loadDocTypes() {
+    N(this, T) && (this._docTypes = await N(this, T).getAllElementTypes());
+  }
+  async _handleSearch() {
+    if (!(!this._selectedAlias || !N(this, T))) {
+      this._loading = !0, this._error = null;
+      try {
+        const e = await N(this, T).getInfoFromAlias(
+          this._selectedAlias
+        );
+        this._nodes = (e == null ? void 0 : e.usages) ?? [], this._currentPage = 1;
+      } catch {
+        this._error = "Error fetching usage", this._nodes = [];
+      } finally {
+        this._loading = !1;
+      }
+    }
+  }
+  _onSelectChange(e) {
+    this._selectedAlias = e.target.value;
+  }
+  get pagedNodes() {
+    const e = (this._currentPage - 1) * V;
+    return this._nodes.slice(e, e + V);
+  }
+  totalPages() {
+    return Math.ceil(this._nodes.length / V);
+  }
+  nextPage() {
+    this._currentPage < this.totalPages() && this._currentPage++;
+  }
+  prevPage() {
+    this._currentPage > 1 && this._currentPage--;
+  }
+  _openEditModal(e) {
+    const t = ue.generateLocal({
+      unique: e
+    });
+    this._modalRegistration.open({}, t);
+  }
+  render() {
+    return f`
+      <uui-box headline="Element Finder">
+        <div class="search-container">
+          <uui-select
+            .options=${this._docTypes.map((e) => ({
+      name: e.name,
+      value: e.alias,
+      selected: this._selectedAlias === e.alias
+    }))}
+            @change=${this._onSelectChange}
+            placeholder="Select a Document Type"
+          >
+          </uui-select>
+          <uui-button
+            look="primary"
+            label="Find Usage"
+            .disabled=${!this._selectedAlias || this._loading}
+            @click=${this._handleSearch}
+          >
+            Find Usage
+          </uui-button>
+        </div>
+
+        ${this._loading ? f`<uui-loader></uui-loader>` : this._renderResults()}
+      </uui-box>
+    `;
+  }
+  _renderResults() {
+    return this._error ? f`<uui-tag look="danger">${this._error}</uui-tag>` : this._nodes.length === 0 ? f`<uui-state-message
+        >Select a type and click search to see results.</uui-state-message
+      >` : f`
+      <div class="results-header">Found ${this._nodes.length} instance(s).</div>
+      <div class="usage-list">
+        ${this.pagedNodes.map(
+      (e, t) => f`
+            <div class="usage-item">
+              <span class="page-name">${e.pageName}</span>
+              <div class="actions">
+                <uui-button
+                  look="secondary"
+                  label="Edit"
+                  @click=${() => this._openEditModal(e.id)}
+                ></uui-button>
+                <uui-button
+                  look="secondary"
+                  label="View"
+                  @click=${() => window.open(e.url, "_blank")}
+                ></uui-button>
+              </div>
+            </div>
+            ${t < this.pagedNodes.length - 1 ? f`<hr class="divider" />` : ""}
+          `
+    )}
+      </div>
+      ${this._renderPagination()}
+    `;
+  }
+  _renderPagination() {
+    return this.totalPages() <= 1 ? null : f`
+      <div class="pagination">
+        <uui-button
+          label="Previous"
+          ?disabled=${this._currentPage === 1}
+          @click=${this.prevPage}
+          >Previous</uui-button
+        >
+        <span>Page ${this._currentPage} of ${this.totalPages()}</span>
+        <uui-button
+          label="Next"
+          ?disabled=${this._currentPage === this.totalPages()}
+          @click=${this.nextPage}
+          >Next</uui-button
+        >
+      </div>
+    `;
+  }
+};
+T = /* @__PURE__ */ new WeakMap();
+P.styles = ie`
+    :host {
+      display: block;
+      padding: 24px;
+    }
+    uui-box {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .search-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    uui-select {
+      flex-grow: 1;
+    }
+    .usage-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .usage-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+    }
+    .divider {
+      border: none;
+      border-bottom: 1px solid var(--uui-color-border);
+      margin: 0;
+    }
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .results-header {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  `;
+S([
+  v()
 ], P.prototype, "_nodes", 2);
-A([
-  I()
+S([
+  v()
 ], P.prototype, "_loading", 2);
-A([
-  I()
+S([
+  v()
 ], P.prototype, "_error", 2);
-A([
-  I()
+S([
+  v()
 ], P.prototype, "_currentPage", 2);
-P = A([
-  me("element-finder")
+S([
+  v()
+], P.prototype, "_selectedAlias", 2);
+S([
+  v()
+], P.prototype, "_docTypes", 2);
+P = S([
+  oe("element-finder-dashboard")
 ], P);
-const Ge = [
+const nt = [
   {
     type: "workspaceView",
     name: "Element Finder",
@@ -836,27 +1064,46 @@ const Ge = [
       pathname: "element-finder"
     }
   }
-], Je = [...Ge], Ke = [
+], it = [...nt], ot = [
   {
     type: "globalContext",
     alias: "getInfo.context",
     name: "Get Info context",
-    js: () => Promise.resolve().then(() => Me)
+    js: () => Promise.resolve().then(() => Xe)
   }
-], Xe = [...Ke], Qe = [
-  ...Je,
-  ...Xe
-], ut = (e, t) => {
-  e.consumeContext(fe, async (r) => {
+], lt = [...ot], ct = [
+  {
+    type: "dashboard",
+    name: "Element Finder",
+    alias: "element-finder-dashboard",
+    elementName: "element-finder-dashboard",
+    weight: -1,
+    meta: {
+      label: "Usages",
+      pathname: "element-finder-dashboard"
+    },
+    conditions: [
+      {
+        alias: "Umb.Condition.SectionAlias",
+        match: "Umb.Section.Content"
+      }
+    ]
+  }
+], ut = [...ct], dt = [
+  ...it,
+  ...lt,
+  ...ut
+], $t = (e, t) => {
+  e.consumeContext(Ee, async (r) => {
     const s = r == null ? void 0 : r.getOpenApiConfiguration();
-    ne.setConfig({
+    H.setConfig({
       auth: (s == null ? void 0 : s.token) ?? void 0,
       baseUrl: (s == null ? void 0 : s.base) ?? "",
       credentials: (s == null ? void 0 : s.credentials) ?? "same-origin"
     });
-  }), t.registerMany(Qe);
+  }), t.registerMany(dt);
 };
 export {
-  ut as onInit
+  $t as onInit
 };
 //# sourceMappingURL=element-finder.js.map
