@@ -77,11 +77,11 @@ const Ce = {
             M = G.pop() ?? "";
             for (const xe of G) {
               const $e = xe.split(`
-`), j = [];
+`), N = [];
               let J;
               for (const y of $e)
                 if (y.startsWith("data:"))
-                  j.push(y.replace(/^data:\s*/, ""));
+                  N.push(y.replace(/^data:\s*/, ""));
                 else if (y.startsWith("event:"))
                   J = y.replace(/^event:\s*/, "");
                 else if (y.startsWith("id:"))
@@ -94,8 +94,8 @@ const Ce = {
                   Number.isNaN(X) || (u = X);
                 }
               let E, K = !1;
-              if (j.length) {
-                const y = j.join(`
+              if (N.length) {
+                const y = N.join(`
 `);
                 try {
                   E = JSON.parse(y), K = !0;
@@ -108,7 +108,7 @@ const Ce = {
                 event: J,
                 id: h,
                 retry: u
-              }), j.length && (yield E);
+              }), N.length && (yield E);
             }
           }
         } finally {
@@ -236,9 +236,9 @@ const Ce = {
     })
   ).join(i);
   return s === "label" || s === "matrix" ? i + o : o;
-}, Ue = /\{[^{}]+\}/g, je = ({ path: e, url: t }) => {
+}, je = /\{[^{}]+\}/g, Ne = ({ path: e, url: t }) => {
   let r = t;
-  const s = t.match(Ue);
+  const s = t.match(je);
   if (s)
     for (const a of s) {
       let c = !1, i = a.substring(1, a.length - 1), o = "simple";
@@ -282,7 +282,7 @@ const Ce = {
       r = r.replace(a, d);
     }
   return r;
-}, Ne = ({
+}, Ue = ({
   baseUrl: e,
   path: t,
   query: r,
@@ -291,7 +291,7 @@ const Ce = {
 }) => {
   const c = a.startsWith("/") ? a : `/${a}`;
   let i = (e ?? "") + c;
-  t && (i = je({ path: t, url: i }));
+  t && (i = Ne({ path: t, url: i }));
   let o = r ? s(r) : "";
   return o.startsWith("?") && (o = o.substring(1)), o && (i += `?${o}`), i;
 };
@@ -390,7 +390,7 @@ const qe = async (e, t) => {
         break;
     }
   }
-}, te = (e) => Ne({
+}, te = (e) => Ue({
   baseUrl: e.baseUrl,
   path: e.path,
   query: e.query,
@@ -497,8 +497,8 @@ const Fe = () => ({
     let w = new Request(h, k);
     for (const p of a.request.fns)
       p && (w = await p(w, n));
-    const U = n.fetch;
-    let u = await U(w);
+    const j = n.fetch;
+    let u = await j(w);
     for (const p of a.response.fns)
       p && (u = await p(u, w, n));
     const g = {
@@ -574,8 +574,8 @@ const Fe = () => ({
       body: h.body,
       headers: h.headers,
       method: d,
-      onRequest: async (w, U) => {
-        let u = new Request(w, U);
+      onRequest: async (w, j) => {
+        let u = new Request(w, j);
         for (const g of a.request.fns)
           g && (u = await g(u, h));
         return u;
@@ -846,7 +846,7 @@ var tt = Object.defineProperty, rt = Object.getOwnPropertyDescriptor, _e = (e) =
   for (var a = s > 1 ? void 0 : s ? rt(t, r) : t, c = e.length - 1, i; c >= 0; c--)
     (i = e[c]) && (a = (s ? i(t, r, a) : i(a)) || a);
   return s && a && tt(t, r, a), a;
-}, ve = (e, t, r) => t.has(e) || _e("Cannot " + r), N = (e, t, r) => (ve(e, t, "read from private field"), t.get(e)), st = (e, t, r) => t.has(e) ? _e("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, r), at = (e, t, r, s) => (ve(e, t, "write to private field"), t.set(e, r), r), T;
+}, ve = (e, t, r) => t.has(e) || _e("Cannot " + r), U = (e, t, r) => (ve(e, t, "read from private field"), t.get(e)), st = (e, t, r) => t.has(e) ? _e("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, r), at = (e, t, r, s) => (ve(e, t, "write to private field"), t.set(e, r), r), T;
 const V = 10;
 let P = class extends le(
   ne
@@ -863,13 +863,13 @@ let P = class extends le(
     }));
   }
   async _loadDocTypes() {
-    N(this, T) && (this._docTypes = await N(this, T).getAllElementTypes());
+    U(this, T) && (this._docTypes = await U(this, T).getAllElementTypes());
   }
   async _handleSearch() {
-    if (!(!this._selectedAlias || !N(this, T))) {
+    if (!(!this._selectedAlias || !U(this, T))) {
       this._loading = !0, this._error = null;
       try {
-        const e = await N(this, T).getInfoFromAlias(
+        const e = await U(this, T).getInfoFromAlias(
           this._selectedAlias
         );
         this._nodes = (e == null ? void 0 : e.usages) ?? [], this._currentPage = 1;
@@ -1079,7 +1079,7 @@ const nt = [
     elementName: "element-finder-dashboard",
     weight: -1,
     meta: {
-      label: "Usages",
+      label: "Eleement Finder",
       pathname: "element-finder-dashboard"
     },
     conditions: [

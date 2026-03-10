@@ -8,7 +8,7 @@ const workspaceViews: Array<ManifestDashboard> = [
     elementName: "element-finder-dashboard",
     weight: -1,
     meta: {
-      label: "Usages",
+      label: "Eleement Finder",
       pathname: "element-finder-dashboard",
     },
     conditions: [
