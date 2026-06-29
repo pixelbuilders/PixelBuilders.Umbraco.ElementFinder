@@ -52,7 +52,7 @@ namespace ElementFinder.Core
                 {
                     Name = x.Name,
                     Alias = x.Alias,
-                }).OrderBy(x => x.Name).ToList();;
+                }).OrderBy(x => x.Name).ToList();
         }
 
         [HttpGet("usage/{alias}")]
