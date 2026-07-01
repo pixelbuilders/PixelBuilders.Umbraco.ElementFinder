@@ -1,5 +1,5 @@
 ## --- Visual Studio / .NET --- ##
-# This catches bin/obj in both ElementFinder.Core and Example Site
+# This catches bin/obj in the package project and Example Site
 [Bb]in/
 [Oo]bj/
 .vs/

@@ -1,0 +1,20 @@
+export default {
+  elementFinder: {
+    usageLabel: "Brug",
+    dashboardLabel: "Element Finder",
+    dashboardHeadline: "Element Finder",
+    contentUsageHeadline: "Indholdsbrug",
+    foundUsageOfType: (count: number) => `Fandt ${count} forekomst(er) af denne type.`,
+    foundInstances: (count: number) => `Fandt ${count} forekomst(er).`,
+    pageOf: (currentPage: number, totalPages: number) => `Side ${currentPage} af ${totalPages}`,
+    edit: "Rediger",
+    view: "Vis",
+    previous: "Forrige",
+    next: "Naeste",
+    findUsage: "Find brug",
+    selectDocumentType: "Vaelg en dokumenttype",
+    selectTypeAndSearch: "Vaelg en type og klik pa sog for at se resultater.",
+    noContentNodesUsingDocumentType: "Ingen indholdsnode bruger i oejeblikket denne dokumenttype.",
+    errorFetchingUsage: "Der opstod en fejl ved hentning af brug",
+  },
+};

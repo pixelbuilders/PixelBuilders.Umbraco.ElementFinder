@@ -1,0 +1,24 @@
+const t = {
+  elementFinder: {
+    usageLabel: "Utilisation",
+    dashboardLabel: "Element Finder",
+    dashboardHeadline: "Element Finder",
+    contentUsageHeadline: "Utilisation du contenu",
+    foundUsageOfType: (e) => `${e} occurrence(s) de ce type trouvee(s).`,
+    foundInstances: (e) => `${e} occurrence(s) trouvee(s).`,
+    pageOf: (e, n) => `Page ${e} sur ${n}`,
+    edit: "Modifier",
+    view: "Voir",
+    previous: "Precedent",
+    next: "Suivant",
+    findUsage: "Trouver l'utilisation",
+    selectDocumentType: "Selectionnez un type de document",
+    selectTypeAndSearch: "Selectionnez un type puis lancez la recherche pour voir les resultats.",
+    noContentNodesUsingDocumentType: "Aucun noeud de contenu n'utilise actuellement ce type de document.",
+    errorFetchingUsage: "Erreur lors de la recuperation de l'utilisation"
+  }
+};
+export {
+  t as default
+};
+//# sourceMappingURL=fr.localization-Daj6RSYY.js.map

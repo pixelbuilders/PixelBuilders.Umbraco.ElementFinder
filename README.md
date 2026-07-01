@@ -12,7 +12,7 @@ The package also allows you to quickly view and edit the content of the pages.
 
 ## Requirements
 
-Umbraco v17
+Umbraco 17.0+
 
 ## Installation
 
