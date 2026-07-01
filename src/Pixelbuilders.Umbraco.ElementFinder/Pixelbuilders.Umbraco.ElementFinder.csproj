@@ -1,53 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <!-- This replaces the need for .targets and manual copying -->
-    <StaticWebAssetBasePath>App_Plugins/Pixelbuilders.Umbraco.ElementFinder</StaticWebAssetBasePath>
-    <PackageId>Pixelbuilders.Umbraco.ElementFinder</PackageId>
-    <Product>Pixelbuilders.Umbraco.ElementFinder</Product>
-    <Title>Pixelbuilders.Umbraco.ElementFinder</Title>
-    <Description>An Umbraco extension that adds a tab to the documents in the Setting tab in the CMS to allow users to search for elements and page types being used within the CMS.</Description>
-    <PackageTags>umbraco;umbraco-marketplace;ElementFinder;Element;Content;Finder;BlockUses</PackageTags>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <Version>17.0.0-beta.2</Version>
-    <Authors>Pixelbuilders</Authors>
-    <Copyright>2026 © Pixelbuilders</Copyright>
-    <PackageProjectUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</RepositoryUrl>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageReadmeFile>NUGET.md</PackageReadmeFile>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <DefaultItemExcludes>$(DefaultItemExcludes);Client\node_modules\**</DefaultItemExcludes>
-    <IsPackable>true</IsPackable>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Api.Management" Version="[17.0.0,18.0.0)" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!-- This replaces the need for .targets and manual copying -->
+		<StaticWebAssetBasePath>App_Plugins/Pixelbuilders.Umbraco.ElementFinder</StaticWebAssetBasePath>
+		<PackageId>Pixelbuilders.Umbraco.ElementFinder</PackageId>
+		<Product>Pixelbuilders.Umbraco.ElementFinder</Product>
+		<Title>Pixelbuilders.Umbraco.ElementFinder</Title>
+		<Description>An Umbraco extension that adds a tab to the documents in the Setting tab in the CMS to allow users to search for elements and page types being used within the CMS.</Description>
+		<PackageTags>umbraco;umbraco-marketplace;ElementFinder;Element;Content;Finder;BlockUses</PackageTags>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<Version>17.0.0-beta.2</Version>
+		<Authors>Pixelbuilders</Authors>
+		<Copyright>2026 © Pixelbuilders</Copyright>
+		<PackageProjectUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</RepositoryUrl>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageReadmeFile>NUGET.md</PackageReadmeFile>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<DefaultItemExcludes>$(DefaultItemExcludes);Client\node_modules\**</DefaultItemExcludes>
+		<IsPackable>true</IsPackable>
+		<ElementFinderClientDir>$(MSBuildProjectDirectory)\Client</ElementFinderClientDir>
+		<RunElementFinderClientBuild Condition="'$(DesignTimeBuild)' != 'true' and '$(Configuration)' == 'Release' and Exists('$(ElementFinderClientDir)\package.json')">true</RunElementFinderClientBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="NUGET.md" Pack="true" PackagePath="\" />
-    <None Include="logo.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Umbraco.Cms.Api.Management" Version="[17.0.0,18.0.0)" />
+	</ItemGroup>
 
-  <Target Name="ElementFinderNpmInstall"
-          BeforeTargets="Build"
-          Condition="'$(DesignTimeBuild)' != 'true' and Exists('$(MSBuildProjectDirectory)\Client\package.json')">
-    <Message Text="Running npm i for Element Finder client..." Importance="high" />
-    <Exec Command="npm i" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
-  </Target>
+	<ItemGroup>
+		<None Include="NUGET.md" Pack="true" PackagePath="\" />
+		<None Include="logo.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
-  <Target Name="ElementFinderNpmBuild"
-          BeforeTargets="Build"
-          DependsOnTargets="ElementFinderNpmInstall"
-          Condition="'$(DesignTimeBuild)' != 'true' and Exists('$(MSBuildProjectDirectory)\Client\package.json')">
-    <Message Text="Running npm run build for Element Finder client..." Importance="high" />
-    <Exec Command="npm run build" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
-  </Target>
+	<Target Name="ElementFinderNpmInstall"
+	    Condition="'$(RunElementFinderClientBuild)' == 'true'">
+		<Message Text="Running npm ci for Element Finder client..." Importance="high" />
+		<Exec Command="npm ci" WorkingDirectory="$(ElementFinderClientDir)" />
+	</Target>
+
+	<Target Name="ElementFinderNpmBuild"
+	    BeforeTargets="Build"
+	    DependsOnTargets="ElementFinderNpmInstall"
+	    Condition="'$(RunElementFinderClientBuild)' == 'true'">
+		<Message Text="Running npm run build for Element Finder client..." Importance="high" />
+		<Exec Command="npm run build" WorkingDirectory="$(ElementFinderClientDir)" />
+	</Target>
 
 </Project>
