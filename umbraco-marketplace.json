@@ -18,7 +18,7 @@
     "SyncContributorsFromRepository": false
   },
   "Category": "Editor Tools",
-  "Description": "An Umbraco 17.0+ editor tool that helps users find where document types, element types, and blocks are used through the Content dashboard and the Settings Usage tab.",
+  "Description": "An Umbraco 18.0+ editor tool that helps users find where document types, element types, and blocks are used through the Content dashboard and the Settings Usage tab.",
   "LicenseTypes": [ "Free" ],
   "DocumentationUrl": "https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/blob/main/README.md",
   "IssueTrackerUrl": "https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/issues",
