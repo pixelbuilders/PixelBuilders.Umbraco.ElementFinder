@@ -13,7 +13,7 @@
 		<PackageTags>umbraco;umbraco-marketplace;ElementFinder;Element;Content;Finder;BlockUses</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-		<Version>17.0.0-beta.2</Version>
+		<Version>17.0.0</Version>
 		<Authors>Pixelbuilders</Authors>
 		<Copyright>2026 © Pixelbuilders</Copyright>
 		<PackageProjectUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</PackageProjectUrl>
@@ -36,6 +36,14 @@
 		<None Include="NUGET.md" Pack="true" PackagePath="\" />
 		<None Include="logo.png" Pack="true" PackagePath="\" />
 	</ItemGroup>
+
+	<Target Name="SyncReadmeToNuGetReadme"
+	    BeforeTargets="GenerateNuspec"
+	    Condition="'$(DesignTimeBuild)' != 'true' and '$(Configuration)' == 'Release' and Exists('$(MSBuildProjectDirectory)\..\..\README.md')">
+		<Copy SourceFiles="$(MSBuildProjectDirectory)\..\..\README.md"
+		    DestinationFiles="$(MSBuildProjectDirectory)\NUGET.md"
+		    OverwriteReadOnlyFiles="true" />
+	</Target>
 
 	<Target Name="ElementFinderNpmInstall"
 	    Condition="'$(RunElementFinderClientBuild)' == 'true'">

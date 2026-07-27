@@ -1,7 +1,7 @@
 {
   "$schema": "../../umbraco-package-schema.json",
   "name": "Element Finder",
-  "version": "17.0.0-beta.2",
+  "version": "1.0.0",
   "extensions": [
     {
       "type": "backofficeEntryPoint",
