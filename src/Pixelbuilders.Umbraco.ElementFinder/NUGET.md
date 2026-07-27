@@ -4,11 +4,13 @@
 
 No configuration is required for the package. Once installed, log into the CMS and use the Element Finder dashboard in the Content section, or open a Document Type in Settings and select the Usage tab.
 
-[![Screenshot 1](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-1.png)](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-1.png)
+[![Content Section Dashboard](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-1.png)](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-1.png)
+
+[![Document Type Usage Tab](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-3.png)](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-3.png)
 
 The package also allows editors to quickly view and edit the matching content items.
 
-[![Screenshot 3](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-2.png)](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-2.png)
+[![Edit Sidebar](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-2.png)](https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-2.png)
 
 ## Requirements
 
@@ -77,10 +79,7 @@ Element Finder scans content nodes for:
 The package is a Razor Class Library and serves its backoffice assets through RCL static web assets. The client app lives in `src/Pixelbuilders.Umbraco.ElementFinder/Client`.
 
 If you are building the package from source, use the Node version that matches the target Umbraco major version:
-
 - Umbraco 17 package line: `^18.18.0 || ^20.9.0 || >=22.10.0`
 - Umbraco 18 package line: `>=22.13.0`
 
-Normal package builds run `npm ci` and `npm run build` for the client. To skip the client build when assets are already up to date, pass:
-
-`/p:SkipElementFinderClientBuild=true`
+Normal package builds run `npm ci` and `npm run build` for the client.
