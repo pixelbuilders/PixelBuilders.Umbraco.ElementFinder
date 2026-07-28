@@ -1,0 +1,20 @@
+export default {
+  elementFinder: {
+    usageLabel: "Anvaendning",
+    dashboardLabel: "Element Finder",
+    dashboardHeadline: "Element Finder",
+    contentUsageHeadline: "Innehallsanvaendning",
+    foundUsageOfType: (count: number) => `Hittade ${count} forekomst(er) av denna typ.`,
+    foundInstances: (count: number) => `Hittade ${count} forekomst(er).`,
+    pageOf: (currentPage: number, totalPages: number) => `Sida ${currentPage} av ${totalPages}`,
+    edit: "Redigera",
+    view: "Visa",
+    previous: "Foeregaende",
+    next: "Naesta",
+    findUsage: "Hitta anvaendning",
+    selectDocumentType: "Vaelj en dokumenttyp",
+    selectTypeAndSearch: "Vaelj en typ och klicka pa sok foer att visa resultat.",
+    noContentNodesUsingDocumentType: "Inga innehallsnoder anvaender foer naervarande denna dokumenttyp.",
+    errorFetchingUsage: "Ett fel uppstod vid haemtning av anvaendning",
+  },
+};

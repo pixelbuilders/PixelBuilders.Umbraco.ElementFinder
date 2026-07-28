@@ -1,0 +1,20 @@
+export default {
+  elementFinder: {
+    usageLabel: "Verwendung",
+    dashboardLabel: "Element Finder",
+    dashboardHeadline: "Element Finder",
+    contentUsageHeadline: "Inhaltsverwendung",
+    foundUsageOfType: (count: number) => `${count} Verwendung(en) dieses Typs gefunden.`,
+    foundInstances: (count: number) => `${count} Instanz(en) gefunden.`,
+    pageOf: (currentPage: number, totalPages: number) => `Seite ${currentPage} von ${totalPages}`,
+    edit: "Bearbeiten",
+    view: "Anzeigen",
+    previous: "Zurueck",
+    next: "Weiter",
+    findUsage: "Verwendung finden",
+    selectDocumentType: "Dokumenttyp auswaehlen",
+    selectTypeAndSearch: "Waehlen Sie einen Typ und starten Sie die Suche, um Ergebnisse anzuzeigen.",
+    noContentNodesUsingDocumentType: "Derzeit verwenden keine Inhaltsknoten diesen Dokumenttyp.",
+    errorFetchingUsage: "Fehler beim Laden der Verwendung",
+  },
+};

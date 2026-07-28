@@ -1,0 +1,20 @@
+export default {
+  elementFinder: {
+    usageLabel: "Gebruik",
+    dashboardLabel: "Element Finder",
+    dashboardHeadline: "Element Finder",
+    contentUsageHeadline: "Inhoudsgebruik",
+    foundUsageOfType: (count: number) => `${count} exempla(a)r(en) van dit type gevonden.`,
+    foundInstances: (count: number) => `${count} exempla(a)r(en) gevonden.`,
+    pageOf: (currentPage: number, totalPages: number) => `Pagina ${currentPage} van ${totalPages}`,
+    edit: "Bewerken",
+    view: "Bekijken",
+    previous: "Vorige",
+    next: "Volgende",
+    findUsage: "Gebruik zoeken",
+    selectDocumentType: "Selecteer een documenttype",
+    selectTypeAndSearch: "Selecteer een type en klik op zoeken om resultaten te zien.",
+    noContentNodesUsingDocumentType: "Er gebruiken momenteel geen contentnodes dit documenttype.",
+    errorFetchingUsage: "Fout bij het ophalen van gebruik",
+  },
+};

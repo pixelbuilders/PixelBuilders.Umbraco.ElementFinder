@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Example Site/ExampleSite.csproj" />
+  <Project Path="Pixelbuilders.Umbraco.ElementFinder/Pixelbuilders.Umbraco.ElementFinder.csproj" />
+</Solution>

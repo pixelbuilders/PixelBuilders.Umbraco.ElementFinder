@@ -1,0 +1,20 @@
+export default {
+  elementFinder: {
+    usageLabel: "Usage",
+    dashboardLabel: "Element Finder",
+    dashboardHeadline: "Element Finder",
+    contentUsageHeadline: "Content Usage",
+    foundUsageOfType: (count: number) => `Found ${count} instance(s) of this type.`,
+    foundInstances: (count: number) => `Found ${count} instance(s).`,
+    pageOf: (currentPage: number, totalPages: number) => `Page ${currentPage} of ${totalPages}`,
+    edit: "Edit",
+    view: "View",
+    previous: "Previous",
+    next: "Next",
+    findUsage: "Find Usage",
+    selectDocumentType: "Select a Document Type",
+    selectTypeAndSearch: "Select a type and click search to see results.",
+    noContentNodesUsingDocumentType: "No content nodes are currently using this Document Type.",
+    errorFetchingUsage: "Error fetching usage",
+  },
+};

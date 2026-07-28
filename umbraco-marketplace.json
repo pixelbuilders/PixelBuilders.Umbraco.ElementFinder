@@ -15,24 +15,29 @@
         "Url": "https://github.com/potatoCutts"
       }
     ],
-    "SyncContributorsFromRepository": true
+    "SyncContributorsFromRepository": false
   },
   "Category": "Editor Tools",
-  "Description": "A umbraco extension to easily find elements / blocks being used within the CMS.",
+  "Description": "An Umbraco 13.0+ editor tool that helps users find where document types, element types, and blocks are used through the Content dashboard and the Settings Usage tab.",
   "LicenseTypes": [ "Free" ],
-  "DocumentationUrl": "https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder",
+  "DocumentationUrl": "https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/blob/main/README.md",
   "IssueTrackerUrl": "https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/issues",
   "PackageType": "Package",
-  "Tags": [ "ElementFinder", "Element Finder", "Block Finder", "Content Finder" ],
+  "Tags": [ "Element Finder", "ElementFinder", "Document Types", "Blocks", "Content Usage", "Editor Tools" ],
   "Title": "Element Finder",
+  "VideoUrl": "https://www.youtube.com/watch?v=4CYto5yh3UA",
   "Screenshots": [
     {
       "ImageUrl": "https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-1.png",
-      "Caption": "Screenshot 1"
+      "Caption": "Element Finder Dashboard"
     },
     {
       "ImageUrl": "https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-2.png",
-      "Caption": "Screenshot 2"
+      "Caption": "Inline Page Editor"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder/refs/heads/main/images/image-3.png",
+      "Caption": "Usage Tab (Content App) within a document type"
     }
   ]
 }
