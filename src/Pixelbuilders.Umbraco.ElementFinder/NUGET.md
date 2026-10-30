@@ -22,8 +22,8 @@ Install the package version that matches your Umbraco major version:
 
 | Umbraco version | Element Finder package version |
 | --- | --- |
-| Umbraco 18 | `18.0.0` |
-| Umbraco 17 | `17.0.0` |
+| Umbraco 18 | `18.0.1` |
+| Umbraco 17 | `17.0.1` |
 | Umbraco 13 | `1.0.1` |
 
 ## Installation
@@ -39,13 +39,13 @@ Install the package version that matches your Umbraco major version:
 For Umbraco 18:
 
 ```bash
-dotnet add package Pixelbuilders.Umbraco.ElementFinder --version 18.0.0
+dotnet add package Pixelbuilders.Umbraco.ElementFinder --version 18.0.1
 ```
 
 For Umbraco 17:
 
 ```bash
-dotnet add package Pixelbuilders.Umbraco.ElementFinder --version 17.0.0
+dotnet add package Pixelbuilders.Umbraco.ElementFinder --version 17.0.1
 ```
 
 For Umbraco 13:

@@ -13,7 +13,7 @@
 		<PackageTags>umbraco;umbraco-marketplace;ElementFinder;Element;Content;Finder;BlockUses</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-		<Version>18.0.0</Version>
+		<Version>18.0.1</Version>
 		<Authors>Pixelbuilders</Authors>
 		<Copyright>2026 © Pixelbuilders</Copyright>
 		<PackageProjectUrl>https://github.com/pixelbuilders/PixelBuilders.Umbraco.ElementFinder</PackageProjectUrl>
@@ -27,6 +27,11 @@
 		<ElementFinderClientDir>$(MSBuildProjectDirectory)\Client</ElementFinderClientDir>
 		<RunElementFinderClientBuild Condition="'$(DesignTimeBuild)' != 'true' and '$(Configuration)' == 'Release' and Exists('$(ElementFinderClientDir)\package.json')">true</RunElementFinderClientBuild>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Update="Client\**" Pack="false" />
+		<None Update="Client\**" Pack="false" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Umbraco.Cms.Api.Management" Version="[18.0.0,19.0.0)" />
